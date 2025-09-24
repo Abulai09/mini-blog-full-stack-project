@@ -5,7 +5,7 @@ import { setAuthAC } from "./redux/authReducer";
 export const registration = (username, email, password) => {
   return async (dispatch) => {
     try {
-        const response = await axios.post(`http://localhost:3001/auth/register`, {
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/register`, {
             username,
             email,
             password,
@@ -24,7 +24,7 @@ export const registration = (username, email, password) => {
 export const login = ( email, password) => {
   return async (dispatch) => {
     try {
-        const response = await axios.post(`http://localhost:3001/auth/login`, {
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/login`, {
             email,
             password,
         });
@@ -45,7 +45,7 @@ export const login = ( email, password) => {
 export const setDatas = () => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`http://localhost:3001/post/getAll`);
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/post/getAll`);
       console.log(response.data);
       dispatch(setDataAC(response.data));
     } catch (e) {
@@ -63,7 +63,7 @@ export const toggleLike = (id) => {
       const userId = payload.id;
 
       const response = await axios.post(
-        `http://localhost:3001/post/${id}`,
+        `${process.env.REACT_APP_API_URL}/post/${id}`,
         { userId }, 
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -91,7 +91,7 @@ export const findMyPosts = () => {
   return async dispatch => {
     try{
       const token = localStorage.getItem("token");
-      const response = await axios.get( `http://localhost:3001/post/me`,{
+      const response = await axios.get( `${process.env.REACT_APP_API_URL}/post/me`,{
         headers:{ Authorization : `Bearer ${token}` }
       } )
       dispatch( setMyDataAC(response.data))
@@ -112,7 +112,7 @@ export const createPost = (title,content,image) => {
       formData.append("title", title);
       formData.append("content", content);
       formData.append("image", image);
-      const response = await axios.post( `http://localhost:3001/post/create`,formData,{
+      const response = await axios.post( `${process.env.REACT_APP_API_URL}/post/create`,formData,{
         headers:{ Authorization : `Bearer ${token}` }
       } )
       console.log(response.data)
@@ -128,7 +128,7 @@ export const addcomment = (id,text) => {
   return async dispatch => {
     try{
       const token = localStorage.getItem("token");
-      const response = await axios.post( `http://localhost:3001/comment/${id}`,{text},{
+      const response = await axios.post( `${process.env.REACT_APP_API_URL}/comment/${id}`,{text},{
         headers:{Authorization:`Bearer ${token}`}
       } )
       console.log(response.data)
