@@ -33,8 +33,8 @@ const Main = () => {
   };
 
   const handdleComment = (id) => {
-    dispatch( addcomment( id, value) )
-  }
+    dispatch(addcomment(id, value));
+  };
 
   useEffect(() => {
     dispatch(setDatas());
@@ -46,8 +46,10 @@ const Main = () => {
         <div key={d._id} className="main">
           <Card
             hoverable
-            style={{ width: 500, }}
-            cover={<Image src={`http://localhost:3001${d.imageUrl}`} />}
+            style={{ width: 500 }}
+            cover={
+              <Image src={`${process.env.REACT_APP_API_URL}${d.imageUrl}`} />
+            }
             className="card"
           >
             <h4>{d.author.username}</h4>
@@ -66,9 +68,7 @@ const Main = () => {
               <p>
                 <HeartOutlined
                   style={{ color: hasUserLiked(d.likes) ? "red" : "gray" }}
-                  onClick={() =>
-                    userId && dispatch(toggleLike(d._id))
-                  }
+                  onClick={() => userId && dispatch(toggleLike(d._id))}
                 />{" "}
                 {d.likes.length}
               </p>
@@ -87,7 +87,9 @@ const Main = () => {
                   value={value}
                   onChange={(e) => setValue(e.target.value)}
                 />
-                <Button onClick={()=> handdleComment(d._id)} type="primary">Отправить</Button>
+                <Button onClick={() => handdleComment(d._id)} type="primary">
+                  Отправить
+                </Button>
               </Space.Compact>
             </div>
           )}

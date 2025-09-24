@@ -2,15 +2,18 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createPost, findMyPosts, setDatas } from "../action";
 import { Image, Card, Button, Input, Upload } from "antd";
-import { CommentOutlined, HeartOutlined, UploadOutlined } from "@ant-design/icons";
+import {
+  CommentOutlined,
+  HeartOutlined,
+  UploadOutlined,
+} from "@ant-design/icons";
 
 const { Meta } = Card;
 
 const Profile = () => {
   const dispatch = useDispatch();
   const datas = useSelector((state) => state.data.myPosts);
-  const auth = useSelector( state => state.auth.payload.email )
-
+  const auth = useSelector((state) => state.auth.payload.email);
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -31,7 +34,7 @@ const Profile = () => {
     setContent("");
     setImage(null);
     dispatch(setDatas()); // обновляем список после отправки
-    alert("Опубликованно")
+    alert("Опубликованно");
   };
 
   const uploadProps = {
@@ -71,13 +74,26 @@ const Profile = () => {
           <Card
             hoverable
             style={{ width: 500 }}
-            cover={<Image src={`http://localhost:3001${d.imageUrl}`} />}
+            cover={
+              <Image src={`${process.env.REACT_APP_API_URL}${d.imageUrl}`} />
+            }
             className="card"
           >
             <Meta title={d.title} description={d.content} />
-            <div className="items" style={{ display: "flex", justifyContent: "space-between", marginTop: 10 }}>
-              <p><CommentOutlined /> {d.comments.length}</p>
-              <p><HeartOutlined /> {d.likes.length}</p>
+            <div
+              className="items"
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginTop: 10,
+              }}
+            >
+              <p>
+                <CommentOutlined /> {d.comments.length}
+              </p>
+              <p>
+                <HeartOutlined /> {d.likes.length}
+              </p>
             </div>
           </Card>
         </div>
